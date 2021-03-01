@@ -39,7 +39,7 @@ export function AddUser() {
   return (
     <div className="container">
       <div className="row">
-        <h1>Add user</h1>
+        <h1>Add Category</h1>
       </div>
       <div className="row">
         <div className="three columns">
@@ -53,7 +53,7 @@ export function AddUser() {
           />
           {error}
           <button onClick={handleClick} className="button-primary">
-            Add user
+            Add Category
           </button>
           <Link to="/">
             <button className="button-primary">back to Categories</button>

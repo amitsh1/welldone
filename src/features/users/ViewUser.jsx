@@ -40,7 +40,7 @@ export function ViewUser(props) {
   return (
     <div className="container">
       <div className="row">
-        <h1>Edit user</h1>
+        <h1>View Category</h1>
       </div>
       <div className="row">
         <div className="three columns">

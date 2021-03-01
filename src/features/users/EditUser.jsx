@@ -40,7 +40,7 @@ export function EditUser(props) {
   return (
     <div className="container">
       <div className="row">
-        <h1>Edit user</h1>
+        <h1>Edit Category</h1>
       </div>
       <div className="row">
         <div className="three columns">
@@ -54,7 +54,7 @@ export function EditUser(props) {
           />
           {error}
           <button onClick={handleClick} className="button-primary">
-            Save user
+            Save Category
           </button>
           <Link to="/" onClick={props.reset_id}>
             <button className="button-primary">back to Categories</button>

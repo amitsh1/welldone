@@ -62,9 +62,9 @@ export default function HeaderBar(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem  onClick={handleClose}>
+        <MenuItem  onClick={handleClose}>           
         <Link to="/add-user" >
-            <button className="button-primary">Add user</button>
+            <button className="button-primary">Add Category</button>
           </Link>           
         </MenuItem>
         {props.selected_id?(
