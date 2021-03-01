@@ -3,8 +3,8 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { useState } from "react";
 import { userUpdated } from "./usersSlice";
-
-export function EditUser() {
+import { Link } from "react-router-dom";
+export function EditUser(props) {
   const { pathname } = useLocation();
   const userId = parseInt(pathname.replace("/edit-user/", ""));
 
@@ -16,21 +16,19 @@ export function EditUser() {
   const history = useHistory();
 
   const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
   const [error, setError] = useState(null);
 
   const handleName = (e) => setName(e.target.value);
-  const handleEmail = (e) => setEmail(e.target.value);
 
   const handleClick = () => {
-    if (name && email) {
+    if (name) {
       dispatch(
         userUpdated({
           id: userId,
           name,
-          email,
         })
       );
+      props.change_name(null);
 
       setError(null);
       history.push("/");
@@ -50,24 +48,17 @@ export function EditUser() {
           <input
             className="u-full-width"
             type="text"
-            placeholder="test@mailbox.com"
             id="nameInput"
             onChange={handleName}
             value={name}
           />
-          <label htmlFor="emailInput">Email</label>
-          <input
-            className="u-full-width"
-            type="email"
-            placeholder="test@mailbox.com"
-            id="emailInput"
-            onChange={handleEmail}
-            value={email}
-          />
-          {error && error}
+          {error}
           <button onClick={handleClick} className="button-primary">
             Save user
           </button>
+          <Link to="/" onClick={props.reset_id}>
+            <button className="button-primary">back to Categories</button>
+          </Link>             
         </div>
       </div>
     </div>

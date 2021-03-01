@@ -1,63 +1,63 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
-import { userAdded } from "./usersSlice";
+import { userUpdated } from "./usersSlice";
 import { Link } from "react-router-dom";
+export function ViewUser(props) {
+  const { pathname } = useLocation();
+  const userId = parseInt(pathname.replace("/view-user/", ""));
 
-export function AddUser() {
+  const user = useSelector((state) =>
+    state.users.entities.find((user) => user.id === userId)
+  );
+
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState(user.name);
   const [error, setError] = useState(null);
 
   const handleName = (e) => setName(e.target.value);
 
-  const usersAmount = useSelector((state) => state.users.entities.length==0?0:Math.max(...state.users.entities.map(x=> x.id)))
-  
   const handleClick = () => {
-    
     if (name) {
       dispatch(
-        userAdded({
-          id: usersAmount + 1,
+        userUpdated({
+          id: userId,
           name,
         })
       );
-      
+      props.change_name(name);
+
       setError(null);
       history.push("/");
     } else {
       setError("Fill in all fields");
     }
-
-    setName("");
-
   };
 
   return (
     <div className="container">
       <div className="row">
-        <h1>Add user</h1>
+        <h1>Edit user</h1>
       </div>
       <div className="row">
         <div className="three columns">
           <label htmlFor="nameInput">Name</label>
           <input
+            disabled
             className="u-full-width"
             type="text"
+            placeholder="test@mailbox.com"
             id="nameInput"
             onChange={handleName}
             value={name}
           />
           {error}
-          <button onClick={handleClick} className="button-primary">
-            Add user
-          </button>
-          <Link to="/">
+          <Link to="/" onClick={props.reset_id}>
             <button className="button-primary">back to Categories</button>
-          </Link>            
+          </Link>             
         </div>
       </div>
     </div>
