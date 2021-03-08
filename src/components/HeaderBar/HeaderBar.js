@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link ,useHistory } from "react-router-dom";
-import { categoryDeleted } from "../../features/users/usersSlice";
+import { categoryDeleted } from "../../features/categories/categoriesSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function capitalizeFirstLetter(string) {

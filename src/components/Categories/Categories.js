@@ -2,10 +2,10 @@ import React from 'react';
 import HeaderBar from '../HeaderBar/HeaderBar';
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import { AddCategory } from "../../features/users/AddCategory";
-import { EditCategory } from "../../features/users/EditCategory";
-import { CategoryList } from "../../features/users/CategoryList";
-import {ViewCategory} from "../../features/users/ViewCategory";
+import { AddCategory } from "../../features/categories/AddCategory";
+import { EditCategory } from "../../features/categories/EditCategory";
+import { CategoryList } from "../../features/categories/CategoryList";
+import {ViewCategory} from "../../features/categories/ViewCategory";
 class Categories extends React.Component {
     constructor(props) {
       super(props);

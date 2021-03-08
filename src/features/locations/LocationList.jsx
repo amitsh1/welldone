@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 export function CategoryList(props) {
   
   const [selected, setSelected] = useState(null);
-  const { entities } = useSelector((state) => state.users);
+  const { entities } = useSelector((state) => state.categories);
   const loading = useSelector((state) => state.loading);
 
 

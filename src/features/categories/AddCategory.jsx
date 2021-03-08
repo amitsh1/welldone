@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
-import { categoryAdded } from "./usersSlice";
+import { categoryAdded } from "./categoriesSlice";
 import { Link } from "react-router-dom";
 
 export function AddCategory() {
@@ -14,7 +14,7 @@ export function AddCategory() {
 
   const handleName = (e) => setName(e.target.value);
 
-  const usersAmount = useSelector((state) => state.users.entities.length==0?0:Math.max(...state.users.entities.map(x=> x.id)))
+  const usersAmount = useSelector((state) => state.categories.entities.length==0?0:Math.max(...state.categories.entities.map(x=> x.id)))
   
   const handleClick = () => {
     

@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { useState } from "react";
-import { categoryUpdated } from "./usersSlice";
+import { categoryUpdated } from "./categoriesSlice";
 import { Link } from "react-router-dom";
 export function EditCategory(props) {
   const { pathname } = useLocation();
   const userId = parseInt(pathname.replace("/categories/edit-user/", ""));
 
   const user = useSelector((state) =>
-    state.users.entities.find((user) => user.id === userId)
+    state.categories.entities.find((user) => user.id === userId)
   );
 
   const dispatch = useDispatch();

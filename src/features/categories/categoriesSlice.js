@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const fetchCategories = createAsyncThunk("categorys/fetchCategories", async () => {
+export const fetchCategories = createAsyncThunk("categories/fetchCategories", async () => {
+  // localStorage.clear();
   const local = localStorage.getItem('reduxState') 
   ? JSON.parse(localStorage.getItem('reduxState'))
   : {entities:[]} 
@@ -8,7 +9,7 @@ export const fetchCategories = createAsyncThunk("categorys/fetchCategories", asy
 });
 
 const categorysSlice = createSlice({
-  name: "categorys",
+  name: "categories",
   initialState: {
     entities: [],
     loading: false,
@@ -20,16 +21,16 @@ const categorysSlice = createSlice({
     },
     categoryUpdated(state, action) {
       const { id, name } = action.payload;
-      const existingUser = state.entities.find((category) => category.id === id);
-      if (existingUser) {
-        existingUser.name = name;
+      const existingCategory = state.entities.find((category) => category.id === id);
+      if (existingCategory) {
+        existingCategory.name = name;
       }
       localStorage.setItem('reduxState', JSON.stringify(state))
     },
     categoryDeleted(state, action) {
       const { id } = action.payload;
-      const existingUser = state.entities.find((category) => category.id === id);
-      if (existingUser) {
+      const existingCategory = state.entities.find((category) => category.id === id);
+      if (existingCategory) {
         state.entities = state.entities.filter((category) => category.id !== id);
       }
       localStorage.setItem('reduxState', JSON.stringify(state))

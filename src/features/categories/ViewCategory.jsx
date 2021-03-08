@@ -8,7 +8,7 @@ export function ViewCategory(props) {
   const userId = parseInt(pathname.replace("/categories/view-user/", ""));
 
   const user = useSelector((state) =>
-    state.users.entities.find((user) => user.id === userId)
+    state.categories.entities.find((user) => user.id === userId)
   );
 
   const dispatch = useDispatch();

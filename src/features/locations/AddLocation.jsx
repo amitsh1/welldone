@@ -37,8 +37,8 @@ export function AddLocation() {
   const [error, setError] = useState(null);
 
   const handleName = (e) => setName(e.target.value);
-
-  const usersAmount = useSelector((state) => state.users.entities.length==0?0:Math.max(...state.users.entities.map(x=> x.id)))
+  const { entities } = useSelector((state) => state.categories);
+  const usersAmount = useSelector((state) => state.categories.entities.length==0?0:Math.max(...state.categories.entities.map(x=> x.id)))
   
   const handleClick = () => {
     
@@ -76,9 +76,11 @@ export function AddLocation() {
           value={age}
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {
+            entities.map(
+              x=>(<MenuItem value={x.name} key={x.id}>{x.name}</MenuItem>)
+            )
+          }
         </Select>
       </FormControl>
 

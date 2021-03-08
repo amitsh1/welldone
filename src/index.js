@@ -2,7 +2,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom";
-import { fetchCategories } from "./features/users/usersSlice";
+import { fetchCategories } from "./features/categories/categoriesSlice";
 import store from "./store";
 
 store.dispatch(fetchCategories());
