@@ -41,7 +41,7 @@ class Categories extends React.Component {
       return (
         <Router>
         <div>
-          <HeaderBar selected={this.state.current_category_selection} selected_id={this.state.selected_id} ondelete={this.category_selected}/>
+          <HeaderBar selected={this.state.current_category_selection} selected_id={this.state.selected_id} ondelete={this.category_selected} prefix="categories"/>
           <Switch>
             <Route path="/categories/add-user">
               <AddCategory />

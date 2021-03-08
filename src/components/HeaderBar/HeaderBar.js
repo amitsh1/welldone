@@ -12,6 +12,10 @@ import { Link ,useHistory } from "react-router-dom";
 import { categoryDeleted } from "../../features/users/usersSlice";
 import { useDispatch, useSelector } from "react-redux";
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -34,7 +38,7 @@ export default function HeaderBar(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const handleDelete = (id) => {
-    history.push("/categories")
+    history.push("/"+props.prefix)
     props.ondelete(null,false);
     dispatch(categoryDeleted({ id }));
     
@@ -51,7 +55,7 @@ export default function HeaderBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {props.selected?props.selected:"Categories"}
+            {props.selected?props.selected:capitalizeFirstLetter(props.prefix)}
           </Typography>
                   
         </Toolbar>
@@ -65,13 +69,13 @@ export default function HeaderBar(props) {
         onClose={handleClose}
       >
         <MenuItem  onClick={handleClose}>           
-        <Link to="/categories/add-user" >
+        <Link to={`/${props.prefix}/add-user`}>
             <button className="button-primary">Add Category</button>
           </Link>           
         </MenuItem>
         {props.selected_id?(
             <MenuItem  onClick={handleClose}>
-            <Link to={`/categories/view-user/${props.selected_id}`}>
+            <Link to={`/${props.prefix}/view-user/${props.selected_id}`}>
                         <button className="button-primary">View</button>
         </Link>
             </MenuItem>
@@ -79,7 +83,7 @@ export default function HeaderBar(props) {
         ) :null}  
         {props.selected_id?(
             <MenuItem onClick={handleClose} >
-            <Link to={`/categories/edit-user/${props.selected_id}`}>
+            <Link to={`/${props.prefix}/edit-user/${props.selected_id}`}>
                         <button className="button-primary">Edit</button>
         </Link> 
             </MenuItem>
