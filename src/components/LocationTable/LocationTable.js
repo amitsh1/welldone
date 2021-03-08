@@ -1,6 +1,6 @@
 import React from 'react'
 // import styled from 'styled-components'
-import { useTable,useSortBy,  useFilters, useGlobalFilter,useAsyncDebounce  } from 'react-table'
+import { useTable,useSortBy,  useFilters, useGlobalFilter,useAsyncDebounce,useGroupBy, useExpanded  } from 'react-table'
 import {matchSorter} from 'match-sorter'
 
 // const Styles = styled.div`
@@ -133,13 +133,17 @@ function Table({ columns, data }) {
     visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
+    state: { groupBy, expanded },
   } = useTable({
     columns,
     data,
   },
   useFilters, // useFilters!
   useGlobalFilter, // useGlobalFilter!  
-  useSortBy
+  useGroupBy,
+  // useGroupBy would be pretty useless without useExpanded ;)  
+  useSortBy,
+  useExpanded
   )
 
   // Render the UI for your table
@@ -149,7 +153,15 @@ function Table({ columns, data }) {
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')}
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.canGroupBy ? (
+                    // If the column can be grouped, let's add a toggle
+                    <span {...column.getGroupByToggleProps()}>
+                      {column.isGrouped ? '🛑 ' : '👊 '}
+                    </span>
+                  ) : null}                
+                
+                {column.render('Header')}
                   <span>
                     {column.isSorted
                       ? column.isSortedDesc
@@ -183,7 +195,24 @@ function Table({ columns, data }) {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                return <td {...cell.getCellProps()}>
+                      {cell.isGrouped ? (
+                        // If it's a grouped cell, add an expander and row count
+                        <>
+                          <span {...row.getToggleRowExpandedProps()}>
+                            {row.isExpanded ? '👇' : '👉'}
+                          </span>{' '}
+                          {cell.render('Cell')} ({row.subRows.length})
+                        </>
+                      ) : cell.isAggregated ? (
+                        // If the cell is aggregated, use the Aggregated
+                        // renderer for cell
+                        cell.render('Aggregated')
+                      ) : cell.isPlaceholder ? null : ( // For cells with repeated values, render null
+                        // Otherwise, just render the regular cell
+                        cell.render('Cell')
+                      )}
+                  </td>
               })}
             </tr>
           )
