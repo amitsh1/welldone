@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link ,useHistory } from "react-router-dom";
-import { fetchUsers, userDeleted } from "../../features/users/usersSlice";
+import { categoryDeleted } from "../../features/users/usersSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +36,7 @@ export default function HeaderBar(props) {
   const handleDelete = (id) => {
     history.push("/categories")
     props.ondelete(null,false);
-    dispatch(userDeleted({ id }));
+    dispatch(categoryDeleted({ id }));
     
   };
   const handleClose = (clicked) => {

@@ -1,46 +1,45 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
 
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
-import { userUpdated } from "./usersSlice";
+import { categoryAdded } from "./usersSlice";
 import { Link } from "react-router-dom";
-export function EditUser(props) {
-  const { pathname } = useLocation();
-  const userId = parseInt(pathname.replace("/categories/edit-user/", ""));
 
-  const user = useSelector((state) =>
-    state.users.entities.find((user) => user.id === userId)
-  );
-
+export function AddCategory() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [name, setName] = useState(user.name);
+  const [name, setName] = useState("");
   const [error, setError] = useState(null);
 
   const handleName = (e) => setName(e.target.value);
 
+  const usersAmount = useSelector((state) => state.users.entities.length==0?0:Math.max(...state.users.entities.map(x=> x.id)))
+  
   const handleClick = () => {
+    
     if (name) {
       dispatch(
-        userUpdated({
-          id: userId,
+        categoryAdded({
+          id: usersAmount + 1,
           name,
         })
       );
-      props.change_name(null);
-
+      
       setError(null);
       history.push("/");
     } else {
       setError("Fill in all fields");
     }
+
+    setName("");
+
   };
 
   return (
     <div className="container">
       <div className="row">
-        <h1>Edit Category</h1>
+        <h1>Add Category</h1>
       </div>
       <div className="row">
         <div className="three columns">
@@ -54,11 +53,11 @@ export function EditUser(props) {
           />
           {error}
           <button onClick={handleClick} className="button-primary">
-            Save Category
+            Add Category
           </button>
-          <Link to="/categories" onClick={props.reset_id}>
+          <Link to="/categories">
             <button className="button-primary">back to Categories</button>
-          </Link>             
+          </Link>            
         </div>
       </div>
     </div>

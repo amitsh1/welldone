@@ -3,10 +3,6 @@ import Categories from '../Categories/Categories';
 import BottomBar from '../BottomBar/BottomBar';
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import { AddUser } from "../../features/users/AddUser";
-import { EditUser } from "../../features/users/EditUser";
-import { UserList } from "../../features/users/UserList";
-import {ViewUser} from "../../features/users/ViewUser";
 class Main extends React.Component {
     constructor(props) {
       super(props);

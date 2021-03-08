@@ -11,7 +11,7 @@ import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
-    width: 500,
+    width: '100vw',
   },
 });
 
@@ -36,7 +36,6 @@ export default function BottomBar() {
     >
       <BottomNavigationAction label="Categories" icon={<RestoreIcon />} value="categories"/>
       <BottomNavigationAction label="Locations" icon={<FavoriteIcon />} value="locations"/>
-      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
     </BottomNavigation>
   );
 }

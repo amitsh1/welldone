@@ -2,10 +2,10 @@ import App from "./App";
 import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom";
-import { fetchUsers } from "./features/users/usersSlice";
+import { fetchCategories } from "./features/users/usersSlice";
 import store from "./store";
 
-store.dispatch(fetchUsers());
+store.dispatch(fetchCategories());
 
 ReactDOM.render(
   <Provider store={store}>

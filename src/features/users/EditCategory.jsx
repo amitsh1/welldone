@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { useState } from "react";
-import { userUpdated } from "./usersSlice";
+import { categoryUpdated } from "./usersSlice";
 import { Link } from "react-router-dom";
-export function ViewUser(props) {
+export function EditCategory(props) {
   const { pathname } = useLocation();
-  const userId = parseInt(pathname.replace("/categories/view-user/", ""));
+  const userId = parseInt(pathname.replace("/categories/edit-user/", ""));
 
   const user = useSelector((state) =>
     state.users.entities.find((user) => user.id === userId)
@@ -23,15 +23,15 @@ export function ViewUser(props) {
   const handleClick = () => {
     if (name) {
       dispatch(
-        userUpdated({
+        categoryUpdated({
           id: userId,
           name,
         })
       );
-      props.change_name(name);
+      props.change_name(null);
 
       setError(null);
-      history.push("/");
+      history.push("/categories");
     } else {
       setError("Fill in all fields");
     }
@@ -40,21 +40,22 @@ export function ViewUser(props) {
   return (
     <div className="container">
       <div className="row">
-        <h1>View Category</h1>
+        <h1>Edit Category</h1>
       </div>
       <div className="row">
         <div className="three columns">
           <label htmlFor="nameInput">Name</label>
           <input
-            disabled
             className="u-full-width"
             type="text"
-            placeholder="test@mailbox.com"
             id="nameInput"
             onChange={handleName}
             value={name}
           />
           {error}
+          <button onClick={handleClick} className="button-primary">
+            Save Category
+          </button>
           <Link to="/categories" onClick={props.reset_id}>
             <button className="button-primary">back to Categories</button>
           </Link>             

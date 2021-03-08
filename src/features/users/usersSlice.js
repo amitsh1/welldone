@@ -1,54 +1,54 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+export const fetchCategories = createAsyncThunk("categorys/fetchCategories", async () => {
   const local = localStorage.getItem('reduxState') 
   ? JSON.parse(localStorage.getItem('reduxState'))
   : {entities:[]} 
   return local.entities;
 });
 
-const usersSlice = createSlice({
-  name: "users",
+const categorysSlice = createSlice({
+  name: "categorys",
   initialState: {
     entities: [],
     loading: false,
   },
   reducers: {
-    userAdded(state, action) {
+    categoryAdded(state, action) {
       state.entities.push(action.payload);
       localStorage.setItem('reduxState', JSON.stringify(state))
     },
-    userUpdated(state, action) {
+    categoryUpdated(state, action) {
       const { id, name } = action.payload;
-      const existingUser = state.entities.find((user) => user.id === id);
+      const existingUser = state.entities.find((category) => category.id === id);
       if (existingUser) {
         existingUser.name = name;
       }
       localStorage.setItem('reduxState', JSON.stringify(state))
     },
-    userDeleted(state, action) {
+    categoryDeleted(state, action) {
       const { id } = action.payload;
-      const existingUser = state.entities.find((user) => user.id === id);
+      const existingUser = state.entities.find((category) => category.id === id);
       if (existingUser) {
-        state.entities = state.entities.filter((user) => user.id !== id);
+        state.entities = state.entities.filter((category) => category.id !== id);
       }
       localStorage.setItem('reduxState', JSON.stringify(state))
     },
   },
   extraReducers: {
-    [fetchUsers.pending]: (state, action) => {
+    [fetchCategories.pending]: (state, action) => {
       state.loading = true;
     },
-    [fetchUsers.fulfilled]: (state, action) => {
+    [fetchCategories.fulfilled]: (state, action) => {
       state.loading = false;
       state.entities = [...state.entities, ...action.payload];
     },
-    [fetchUsers.rejected]: (state, action) => {
+    [fetchCategories.rejected]: (state, action) => {
       state.loading = false;
     },
   },
 });
 
-export const { userAdded, userUpdated, userDeleted } = usersSlice.actions;
+export const { categoryAdded, categoryUpdated, categoryDeleted } = categorysSlice.actions;
 
-export default usersSlice.reducer;
+export default categorysSlice.reducer;
