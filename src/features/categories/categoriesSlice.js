@@ -4,7 +4,7 @@ export const fetchCategories = createAsyncThunk("categories/fetchCategories", as
   // localStorage.clear();
   const local = localStorage.getItem('reduxState') 
   ? JSON.parse(localStorage.getItem('reduxState'))
-  : {entities:[]} 
+  : {entities:[],entities2:[]} 
   return local.entities;
 });
 

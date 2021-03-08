@@ -51,6 +51,7 @@ export function AddLocation() {
       dispatch(
         locationAdded({
           id: usersAmount + 1,
+          category:age,
           name,
           address,
           coor

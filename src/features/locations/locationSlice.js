@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchLocations = createAsyncThunk("locations/fetchLocations", async () => {
-  const local = localStorage.getItem('reduxState') 
-  ? JSON.parse(localStorage.getItem('reduxState'))
-  : {entities:[]} 
+  const local = localStorage.getItem('reduxState2') 
+  ? JSON.parse(localStorage.getItem('reduxState2'))
+  : {}
   return local.entities;
 });
 
@@ -16,7 +16,7 @@ const locationsSlice = createSlice({
   reducers: {
     locationAdded(state, action) {
       state.entities.push(action.payload);
-      localStorage.setItem('reduxState', JSON.stringify(state))
+      localStorage.setItem('reduxState2', JSON.stringify(state))
     },
     locationUpdated(state, action) {
       const { id, name } = action.payload;
@@ -24,7 +24,7 @@ const locationsSlice = createSlice({
       if (existingUser) {
         existingUser.name = name;
       }
-      localStorage.setItem('reduxState', JSON.stringify(state))
+      localStorage.setItem('reduxState2', JSON.stringify(state))
     },
     locationDeleted(state, action) {
       const { id } = action.payload;
@@ -32,7 +32,7 @@ const locationsSlice = createSlice({
       if (existingUser) {
         state.entities = state.entities.filter((location) => location.id !== id);
       }
-      localStorage.setItem('reduxState', JSON.stringify(state))
+      localStorage.setItem('reduxState2', JSON.stringify(state))
     },
   },
   extraReducers: {
