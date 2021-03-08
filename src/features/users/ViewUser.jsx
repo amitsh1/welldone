@@ -55,7 +55,7 @@ export function ViewUser(props) {
             value={name}
           />
           {error}
-          <Link to="/" onClick={props.reset_id}>
+          <Link to="/categories" onClick={props.reset_id}>
             <button className="button-primary">back to Categories</button>
           </Link>             
         </div>

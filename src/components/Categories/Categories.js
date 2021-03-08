@@ -1,13 +1,12 @@
 import React from 'react'; 
-import Categories from '../Categories/Categories';
-import BottomBar from '../BottomBar/BottomBar';
+import HeaderBar from '../HeaderBar/HeaderBar';
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { AddUser } from "../../features/users/AddUser";
 import { EditUser } from "../../features/users/EditUser";
 import { UserList } from "../../features/users/UserList";
 import {ViewUser} from "../../features/users/ViewUser";
-class Main extends React.Component {
+class Categories extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -42,22 +41,25 @@ class Main extends React.Component {
       return (
         <Router>
         <div>
-          <Switch>          
-            <Route path="/categories/">
-              <Categories />
+          <HeaderBar selected={this.state.current_category_selection} selected_id={this.state.selected_id} ondelete={this.category_selected}/>
+          <Switch>
+            <Route path="/categories/add-user">
+              <AddUser />
             </Route>
-            <Route path="/locations">
-              <h1>locations</h1>
-            </Route>                   
-            <Route path="/">
-              <h1>ssdffasa</h1>
+            <Route path="/categories/edit-user">
+              <EditUser change_name={this.change_name} reset_id={this.reset_id}/>
+            </Route>
+            <Route path="/categories/view-user">
+              <ViewUser reset_id={this.reset_id} />
             </Route>            
+            <Route path="/categories/">
+              <UserList onselect={this.category_selected} />
+            </Route>          
           </Switch>
-          <BottomBar />
         </div>
       </Router>
 );
     }
   }
   
-export default Main;
+export default Categories;

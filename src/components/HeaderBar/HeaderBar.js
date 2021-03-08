@@ -34,7 +34,7 @@ export default function HeaderBar(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const handleDelete = (id) => {
-    history.push("/")
+    history.push("/categories")
     props.ondelete(null,false);
     dispatch(userDeleted({ id }));
     

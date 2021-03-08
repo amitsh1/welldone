@@ -55,7 +55,7 @@ export function AddUser() {
           <button onClick={handleClick} className="button-primary">
             Add Category
           </button>
-          <Link to="/">
+          <Link to="/categories">
             <button className="button-primary">back to Categories</button>
           </Link>            
         </div>
