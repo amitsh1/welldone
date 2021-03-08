@@ -12,6 +12,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import Map from '../../components/Map/Map'
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -66,8 +67,11 @@ export function AddLocation() {
         <h1>Add Location</h1>
       </div>
       <div className="row">
+      <Map />
+      </div>      
+      <div className="row">
         <div className="three columns">
-
+        
         <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Age</InputLabel>
         <Select
@@ -83,7 +87,7 @@ export function AddLocation() {
           }
         </Select>
       </FormControl>
-
+          
           <label htmlFor="nameInput">Name</label>
           <input
             className="u-full-width"
