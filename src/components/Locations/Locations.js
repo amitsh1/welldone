@@ -38,7 +38,6 @@ class Locations extends React.Component {
 
       return (
         <Router>
-        <div>
           <HeaderBar selected={this.state.current_location_selection} selected_id={this.state.selected_id} ondelete={this.location_selected} prefix="locations"/>
           <Switch>
             <Route path="/locations/add-user">
@@ -55,7 +54,6 @@ class Locations extends React.Component {
             </Route>                
 
           </Switch>
-        </div>
       </Router>
 );
     }

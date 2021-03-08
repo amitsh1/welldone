@@ -38,7 +38,6 @@ class Main extends React.Component {
 
       return (
         <Router>
-        <div>
           <Switch>          
             <Route path="/categories/">
               <Categories />
@@ -51,7 +50,6 @@ class Main extends React.Component {
             </Route>            
           </Switch>
           <BottomBar />
-        </div>
       </Router>
 );
     }
