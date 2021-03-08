@@ -6,7 +6,7 @@ import { userUpdated } from "./usersSlice";
 import { Link } from "react-router-dom";
 export function EditUser(props) {
   const { pathname } = useLocation();
-  const userId = parseInt(pathname.replace("/edit-user/", ""));
+  const userId = parseInt(pathname.replace("/categories/edit-user/", ""));
 
   const user = useSelector((state) =>
     state.users.entities.find((user) => user.id === userId)

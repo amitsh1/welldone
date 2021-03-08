@@ -1,5 +1,6 @@
 import React from 'react'; 
-import HeaderBar from '../HeaderBar/HeaderBar'
+import HeaderBar from '../HeaderBar/HeaderBar';
+import BottomBar from '../BottomBar/BottomBar';
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { AddUser } from "../../features/users/AddUser";
@@ -43,19 +44,26 @@ class Main extends React.Component {
         <div>
           <HeaderBar selected={this.state.current_category_selection} selected_id={this.state.selected_id} ondelete={this.category_selected}/>
           <Switch>
-            <Route path="/add-user">
+            <Route path="/categories/add-user">
               <AddUser />
             </Route>
-            <Route path="/edit-user">
+            <Route path="/categories/edit-user">
               <EditUser change_name={this.change_name} reset_id={this.reset_id}/>
             </Route>
-            <Route path="/view-user">
+            <Route path="/categories/view-user">
               <ViewUser reset_id={this.reset_id} />
             </Route>            
-            <Route path="/">
+            <Route path="/categories/">
               <UserList onselect={this.category_selected} />
             </Route>
+            <Route path="/locations">
+              <h1>locations</h1>
+            </Route>                   
+            <Route path="/">
+              <h1>ssdffasa</h1>
+            </Route>            
           </Switch>
+          <BottomBar />
         </div>
       </Router>
 );

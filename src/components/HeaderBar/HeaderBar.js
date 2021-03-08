@@ -65,13 +65,13 @@ export default function HeaderBar(props) {
         onClose={handleClose}
       >
         <MenuItem  onClick={handleClose}>           
-        <Link to="/add-user" >
+        <Link to="/categories/add-user" >
             <button className="button-primary">Add Category</button>
           </Link>           
         </MenuItem>
         {props.selected_id?(
             <MenuItem  onClick={handleClose}>
-            <Link to={`/view-user/${props.selected_id}`}>
+            <Link to={`/categories/view-user/${props.selected_id}`}>
                         <button className="button-primary">View</button>
         </Link>
             </MenuItem>
@@ -79,7 +79,7 @@ export default function HeaderBar(props) {
         ) :null}  
         {props.selected_id?(
             <MenuItem onClick={handleClose} >
-            <Link to={`/edit-user/${props.selected_id}`}>
+            <Link to={`/categories/edit-user/${props.selected_id}`}>
                         <button className="button-primary">Edit</button>
         </Link> 
             </MenuItem>
