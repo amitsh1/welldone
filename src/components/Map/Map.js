@@ -14,18 +14,20 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 
-function LocationMarker() {
+function LocationMarker(props) {
     const [position, setPosition] = useState([51.505, -0.09]);
+    const [address, setAddress] = useState("no address selected");
     const map = useMapEvents({
       click(ev) {
         var latlng = map.mouseEventToLatLng(ev.originalEvent);
         
         
-        fetch(`https://nominatim.openstreetmap.org/reverse.php?lat=${latlng.lat}&lon=${latlng.lng}&zoom=18&format=jsonv2`)
+        fetch(`https://nominatim.openstreetmap.org/reverse.php?lat=${latlng.lat}&lon=${latlng.lng}&zoom=17&format=jsonv2`)
         .then(res => res.json())
         .then(
           (res) => {
-            console.log('res',res);
+            props.set_address(res.display_name,[latlng.lat,latlng.lng])
+            setAddress(res.display_name);
           },
           // Note: it's important to handle errors here
           // instead of a catch() block so that we don't swallow
@@ -39,18 +41,12 @@ function LocationMarker() {
         )
                       
         setPosition(ev.latlng)
-        console.log(latlng.lat + ', ' + latlng.lng);
-        console.log("cli");
-      },
-      locationfound(e) {
-        setPosition(e.latlng)
-        map.flyTo(e.latlng, map.getZoom())
-      },
+      }
     })
   
     return position === null ? null : (
       <Marker position={position}>
-        <Popup>You are here</Popup>
+        <Popup>{address}</Popup>
       </Marker>
     )
   }
@@ -74,12 +70,12 @@ class Map extends React.Component {
         <MapContainer
         center={{ lat: 51.505, lng: -0.09 }}
         zoom={13}
-        scrollWheelZoom={false}>
+        scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <LocationMarker />
+        <LocationMarker set_address={this.props.handler}/>
       </MapContainer>
 );
     }

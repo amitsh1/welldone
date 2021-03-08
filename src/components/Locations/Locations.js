@@ -3,7 +3,7 @@ import HeaderBar from '../HeaderBar/HeaderBar';
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { AddLocation } from "../../features/locations/AddLocation";
-
+import { LocationList } from "../../features/locations/LocationList"
 class Locations extends React.Component {
     constructor(props) {
       super(props);
@@ -41,9 +41,19 @@ class Locations extends React.Component {
         <div>
           <HeaderBar selected={this.state.current_location_selection} selected_id={this.state.selected_id} ondelete={this.location_selected} prefix="locations"/>
           <Switch>
-            <Route path="/locations">
+            <Route path="/locations/add-user">
               <AddLocation />
-            </Route>        
+            </Route>   
+            {/* <Route path="/locations/edit-user">
+              <EditLocation change_name={this.change_name} reset_id={this.reset_id}/>
+            </Route>
+            <Route path="/locations/view-user">
+              <ViewLocation reset_id={this.reset_id} />
+            </Route>             */}
+            <Route path="/locations/">
+              <LocationList onselect={this.location_selected} />
+            </Route>                
+
           </Switch>
         </div>
       </Router>

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-export function CategoryList(props) {
+export function LocationList(props) {
   
   const [selected, setSelected] = useState(null);
-  const { entities } = useSelector((state) => state.categories);
+  const { entities } = useSelector((state) => state.locations);
   const loading = useSelector((state) => state.loading);
 
 

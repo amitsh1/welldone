@@ -12,6 +12,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import Alert from '@material-ui/lab/Alert';
+
 import Map from '../../components/Map/Map'
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function AddLocation() {
   const classes = useStyles();
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -35,11 +37,13 @@ export function AddLocation() {
   const history = useHistory();
 
   const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [coor, setCoor] = useState(null);
   const [error, setError] = useState(null);
-
+  const handleAddress = (e) => setAddress(e.target.value);
   const handleName = (e) => setName(e.target.value);
   const { entities } = useSelector((state) => state.categories);
-  const usersAmount = useSelector((state) => state.categories.entities.length==0?0:Math.max(...state.categories.entities.map(x=> x.id)))
+  const usersAmount = useSelector((state) => state.locations.entities.length==0?0:Math.max(...state.locations.entities.map(x=> x.id)))
   
   const handleClick = () => {
     
@@ -48,11 +52,13 @@ export function AddLocation() {
         locationAdded({
           id: usersAmount + 1,
           name,
+          address,
+          coor
         })
       );
       
       setError(null);
-      history.push("/");
+      history.push("/locations");
     } else {
       setError("Fill in all fields");
     }
@@ -60,14 +66,18 @@ export function AddLocation() {
     setName("");
 
   };
+  const set_adress = (address,coor) => {
+    setAddress(address);
+    setCoor(coor)
 
+  }
   return (
     <div className="container">
       <div className="row">
         <h1>Add Location</h1>
       </div>
       <div className="row">
-      <Map />
+      <Map handler={set_adress}/>
       </div>      
       <div className="row">
         <div className="three columns">
@@ -87,7 +97,14 @@ export function AddLocation() {
           }
         </Select>
       </FormControl>
-          
+      <label htmlFor="nameInput">Address</label>
+          <input
+            className="u-full-width"
+            type="text"
+            id="addressInput"
+            onChange={handleAddress}
+            value={address}
+          />          
           <label htmlFor="nameInput">Name</label>
           <input
             className="u-full-width"
@@ -97,9 +114,10 @@ export function AddLocation() {
             value={name}
           />
           {error}
-          <button onClick={handleClick} className="button-primary">
+          {(name && coor && age)?          <button onClick={handleClick} className="button-primary">
             Add Location
-          </button>
+          </button>: <Alert severity="error">must enter name, coordinates(select on map) and category</Alert>}
+
           <Link to="/categories">
             <button className="button-primary">back to Categories</button>
           </Link>            
