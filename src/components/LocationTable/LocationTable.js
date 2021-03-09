@@ -295,6 +295,15 @@ function LocationTable(props) {
           {
             Header: 'Category',
             accessor: 'category',
+            Cell: ({ row: { original } }) => (
+              <span
+              style={{
+               whiteSpace: 'pre-wrap',
+              }}
+           >
+             {original.category.join(", ")}
+           </span>
+          ),            
           },          
         ],
       },

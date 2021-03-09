@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 export function AddLocation() {
   const classes = useStyles();
-  const [age, setAge] = useState([]);
+  const [category, setCategory] = useState([]);
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setCategory(event.target.value);
   };  
   const dispatch = useDispatch();
   const history = useHistory();
@@ -51,7 +51,7 @@ export function AddLocation() {
       dispatch(
         locationAdded({
           id: usersAmount + 1,
-          category:age,
+          category:category,
           name,
           address,
           coor
@@ -84,12 +84,12 @@ export function AddLocation() {
         <div className="three columns">
         
         <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
           multiple
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={category}
           onChange={handleChange}
         >
           {
@@ -116,7 +116,7 @@ export function AddLocation() {
             value={name}
           />
           {error}
-          {(name && coor && age)?          <button onClick={handleClick} className="button-primary">
+          {(name && coor && category.length>0)?          <button onClick={handleClick} className="button-primary">
             Add Location
           </button>: <Alert severity="error">must enter name, coordinates(select on map) and category</Alert>}
 

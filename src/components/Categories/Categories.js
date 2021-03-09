@@ -6,6 +6,9 @@ import { AddCategory } from "../../features/categories/AddCategory";
 import { EditCategory } from "../../features/categories/EditCategory";
 import { CategoryList } from "../../features/categories/CategoryList";
 import {ViewCategory} from "../../features/categories/ViewCategory";
+
+import { categoryDeleted } from "../../features/categories/categoriesSlice";
+
 class Categories extends React.Component {
     constructor(props) {
       super(props);
@@ -41,7 +44,13 @@ class Categories extends React.Component {
       return (
         <Router>
         <div>
-          <HeaderBar selected={this.state.current_category_selection} selected_id={this.state.selected_id} ondelete={this.category_selected} prefix="categories"/>
+          <HeaderBar 
+          selected={this.state.current_category_selection} 
+          selected_id={this.state.selected_id} 
+          ondelete={this.category_selected} 
+          redobj = {categoryDeleted}
+          prefix="categories"
+          />
           <Switch>
             <Route path="/categories/add-user">
               <AddCategory />

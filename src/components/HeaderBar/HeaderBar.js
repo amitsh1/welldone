@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link ,useHistory } from "react-router-dom";
-import { categoryDeleted } from "../../features/categories/categoriesSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 
 function capitalizeFirstLetter(string) {
@@ -40,7 +40,7 @@ export default function HeaderBar(props) {
   const handleDelete = (id) => {
     history.push("/"+props.prefix)
     props.ondelete(null,false);
-    dispatch(categoryDeleted({ id }));
+    dispatch(props.redobj({ id }));
     
   };
   const handleClose = (clicked) => {
@@ -70,7 +70,7 @@ export default function HeaderBar(props) {
       >
         <MenuItem  onClick={handleClose}>           
         <Link to={`/${props.prefix}/add-user`}>
-            <button className="button-primary">Add Category</button>
+            <button className="button-primary">Add</button>
           </Link>           
         </MenuItem>
         {props.selected_id?(

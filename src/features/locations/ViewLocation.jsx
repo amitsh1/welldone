@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leafl
 import { Link } from "react-router-dom";
 export function ViewLocation(props) {
 
-
   return (
 
     <div className="container">

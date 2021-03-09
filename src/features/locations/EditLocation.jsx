@@ -1,7 +1,7 @@
 import React,{ useState,useRef,useMemo } from "react";
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leaflet';
-import { Link } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -32,7 +32,7 @@ function LocationMarker(props) {
             props.setedit(
               event.target.options.locid,
               event.target.options.item.category,
-              latlng,
+              [latlng.lat,latlng.lng],
               event.target.options.item.name,
               res.display_name
             )            
@@ -61,6 +61,7 @@ function LocationMarker(props) {
         // }
       },
       click(event) {
+
         props.setedit(
           event.target.options.locid,
           event.target.options.item.category,
@@ -81,6 +82,7 @@ function LocationMarker(props) {
 
 
 export function EditLocation(props) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [age, setAge] = useState([]);
   const [name, setName] = useState("");
@@ -99,10 +101,10 @@ export function EditLocation(props) {
     setAge(categories);
     setName(name);
     setAddress(address);
-    setCoor([coor.lat,coor.lng]);
+    setCoor(coor);
   }
   const upadtelocation = ()=>{
-    console.log(locid,age,name,address)
+
     dispatch(
       locationUpdated({
         id: locid,
@@ -113,6 +115,8 @@ export function EditLocation(props) {
 
       })
     );
+    props.reset_selection()
+    history.push("/locations");
 
   }
   return (
@@ -126,7 +130,7 @@ export function EditLocation(props) {
           props.selection.length>0?
           <MapContainer style={{"height":"50vh"}}
           center={{ lat: props.selection[0].coor[0], lng: props.selection[0].coor[1] }}
-          zoom={13}
+          zoom={10}
           scrollWheelZoom={true}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
