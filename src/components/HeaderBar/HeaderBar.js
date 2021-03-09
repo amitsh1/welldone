@@ -37,10 +37,11 @@ export default function HeaderBar(props) {
   };
   const dispatch = useDispatch();
   const history = useHistory();
-  const handleDelete = (id) => {
+  const handleDelete = (id) => {   
+    dispatch(props.redobj({ id:id.length?id:[id] }));
     history.push("/"+props.prefix)
-    props.ondelete(null,false);
-    dispatch(props.redobj({ id }));
+    props.ondelete();
+    // dispatch(props.redobj({ id }));
     
   };
   const handleClose = (clicked) => {

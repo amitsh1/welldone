@@ -30,11 +30,9 @@ const locationsSlice = createSlice({
       localStorage.setItem('reduxState2', JSON.stringify(state))
     },
     locationDeleted(state, action) {
+      
       const { id } = action.payload;
-      const existingUser = state.entities.find((location) => location.id === id);
-      if (existingUser) {
-        state.entities = state.entities.filter((location) => location.id !== id);
-      }
+      state.entities = state.entities.filter((location) => !id.includes(location.id));
       localStorage.setItem('reduxState2', JSON.stringify(state))
     },
   },

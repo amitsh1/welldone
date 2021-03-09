@@ -8,7 +8,7 @@ import { EditLocation } from "../../features/locations/EditLocation";
 // import { LocationList } from "../../features/locations/LocationList";
 import LocationTable from "../LocationTable/LocationTable";
 
-
+import { locationDeleted } from "../../features/locations/locationSlice";
 
 
 class Locations extends React.Component {
@@ -67,7 +67,13 @@ class Locations extends React.Component {
 
       return (
         <Router>
-          <HeaderBar selected={this.state.current_location_selection} selected_id={this.state.row_selection.length==0?null:"selected locations"} ondelete={this.location_selected} prefix="locations"/>
+          <HeaderBar 
+          selected={this.state.current_location_selection} 
+          selected_id={this.state.row_selection.length==0?null:this.state.row_selection.map(x=>x.id)} 
+          ondelete={this.reset_selection} 
+          redobj = {locationDeleted}          
+          // ondelete={this.location_selected} 
+          prefix="locations"/>
           <Switch>
             <Route path="/locations/add-user">
               <AddLocation />
@@ -79,7 +85,6 @@ class Locations extends React.Component {
               <ViewLocation selection={this.state.row_selection} reset_selection={this.reset_selection}/>
             </Route>            
             <Route path="/locations/">
-              <h1>asda</h1>
               <LocationTable onselect={this.reset_id}  />
             </Route>                
 

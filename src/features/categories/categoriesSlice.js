@@ -28,9 +28,9 @@ const categorysSlice = createSlice({
     },
     categoryDeleted(state, action) {
       const { id } = action.payload;
-      const existingCategory = state.entities.find((category) => category.id === id);
+      const existingCategory = state.entities.find((category) => category.id === id[0]);
       if (existingCategory) {
-        state.entities = state.entities.filter((category) => category.id !== id);
+        state.entities = state.entities.filter((category) => category.id !== id[0]);
       }
       localStorage.setItem('reduxState', JSON.stringify(state))
     },

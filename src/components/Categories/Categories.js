@@ -47,7 +47,7 @@ class Categories extends React.Component {
           <HeaderBar 
           selected={this.state.current_category_selection} 
           selected_id={this.state.selected_id} 
-          ondelete={this.category_selected} 
+          ondelete={x=>{this.category_selected(null,false)}} 
           redobj = {categoryDeleted}
           prefix="categories"
           />
