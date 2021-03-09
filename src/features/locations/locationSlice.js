@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const fetchLocations = createAsyncThunk("locations/fetchLocations", async () => {
   const local = localStorage.getItem('reduxState2') 
   ? JSON.parse(localStorage.getItem('reduxState2'))
-  : {}
+  : {entities:[]}
   return local.entities;
 });
 

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function AddLocation() {
   const classes = useStyles();
-  const [age, setAge] = useState("");
+  const [age, setAge] = useState([]);
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -86,6 +86,7 @@ export function AddLocation() {
         <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-label">Age</InputLabel>
         <Select
+          multiple
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={age}

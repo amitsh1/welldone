@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchCategories = createAsyncThunk("categories/fetchCategories", async () => {
-  // localStorage.clear();
   const local = localStorage.getItem('reduxState') 
   ? JSON.parse(localStorage.getItem('reduxState'))
-  : {entities:[],entities2:[]} 
+  : {entities:[]} 
   return local.entities;
 });
 
