@@ -5,9 +5,6 @@
   "engines": {
     "node": "15.x"
   },
-  "devDependency":{
-    "chokidar": "^3.5.1"
-  },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
