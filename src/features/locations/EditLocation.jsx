@@ -11,6 +11,10 @@ import Select from '@material-ui/core/Select';
 
 import { useDispatch, useSelector } from "react-redux";
 
+import Alert from '@material-ui/lab/Alert';
+
+import { locationUpdated } from "./locationSlice";
+
 function LocationMarker(props) {
   const [position, setPosition] = useState(props.position);
   const [address, setAddress] = useState("no address selected");
@@ -56,6 +60,15 @@ function LocationMarker(props) {
         //   setPosition(marker.getLatLng())
         // }
       },
+      click(event) {
+        props.setedit(
+          event.target.options.locid,
+          event.target.options.item.category,
+          event.target.options.item.coor,
+          event.target.options.item.name,
+          event.target.options.item.address
+        )  
+      }
     }),
     [],
   )
@@ -68,9 +81,11 @@ function LocationMarker(props) {
 
 
 export function EditLocation(props) {
-  
+  const dispatch = useDispatch();
   const [age, setAge] = useState([]);
   const [name, setName] = useState("");
+  const [coor, setCoor] = useState([0,0]);
+  const [locid, setLocid] = useState(null);
   const [address, setAddress] = useState("");
   const handleAddress = (e) => setAddress(e.target.value);
   const handleName = (e) => setName(e.target.value);
@@ -80,9 +95,25 @@ export function EditLocation(props) {
   const { entities } = useSelector((state) => state.categories);
 
   const setEdit = (locid,categories,coor,name,address)=>{
-    setAge(categories)
-    setName(name)
-    setAddress(address)  
+    setLocid(locid);
+    setAge(categories);
+    setName(name);
+    setAddress(address);
+    setCoor([coor.lat,coor.lng]);
+  }
+  const upadtelocation = ()=>{
+    console.log(locid,age,name,address)
+    dispatch(
+      locationUpdated({
+        id: locid,
+        category:age,
+        name,
+        address,
+        coor
+
+      })
+    );
+
   }
   return (
 
@@ -148,8 +179,9 @@ export function EditLocation(props) {
             id="nameInput"
             onChange={handleName}
             value={name}
-          />        
-      </FormControl>:null        
+          />    
+      <button className="button-primary" onClick={upadtelocation} >Submit Change</button>
+      </FormControl>:<Alert severity="error">click or move one of the location markers to change its location</Alert>        
       }
 
       <div className="row" >

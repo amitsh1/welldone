@@ -19,10 +19,13 @@ const locationsSlice = createSlice({
       localStorage.setItem('reduxState2', JSON.stringify(state))
     },
     locationUpdated(state, action) {
-      const { id, name } = action.payload;
+      const { id, category, name, address, coor } = action.payload;
       const existingUser = state.entities.find((location) => location.id === id);
       if (existingUser) {
+        existingUser.category = category;
         existingUser.name = name;
+        existingUser.address = address;
+        existingUser.coor = coor;
       }
       localStorage.setItem('reduxState2', JSON.stringify(state))
     },
