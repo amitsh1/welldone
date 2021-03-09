@@ -3,54 +3,78 @@ import HeaderBar from '../HeaderBar/HeaderBar';
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { AddLocation } from "../../features/locations/AddLocation";
-import { LocationList } from "../../features/locations/LocationList"
+import { ViewLocation } from "../../features/locations/ViewLocation";
+
+// import { LocationList } from "../../features/locations/LocationList";
+import LocationTable from "../LocationTable/LocationTable";
+
+
+
+
 class Locations extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        current_location_selection: null,
-        selected_id:null
+        row_selection: [],
+        selected_row_ids:[],
+        all_is_selected:false
       };
-      this.location_selected = this.location_selected.bind(this);
-      this.change_name = this.change_name.bind(this);
+      
+      // this.location_selected = this.location_selected.bind(this);
+      // this.change_name = this.change_name.bind(this);
       this.reset_id = this.reset_id.bind(this);
     }
+
  
 
-    location_selected(id,location){
+    // location_selected(id,location){
+    //     this.setState({
+    //         current_location_selection:location,
+    //         selected_id: id
+    //       });              
+    // }
+    // change_name(location){
+    //     this.setState({
+    //         current_location_selection:location
+    //       });            
+    // }
+    reset_id(item){
+      
+      if (item.length){
         this.setState({
-            current_location_selection:location,
-            selected_id: id
-          });              
-    }
-    change_name(location){
+          all_is_selected:!(this.state.all_is_selected || item.length==this.state.row_selection.length),
+          row_selection:!(this.state.all_is_selected || item.length==this.state.row_selection.length)?item:[]
+        });      
+      }
+      else {
+        var new_row_sel = this.state.row_selection.includes(item) ? this.state.row_selection.filter(i => i !== item) : [ ...this.state.row_selection, item ];
         this.setState({
-            current_location_selection:location
-          });            
+          all_is_selected:this.state.all_is_selected?false:this.state.all_is_selected,
+          row_selection:new_row_sel
+        });   
+    
+       }
+     
     }
-    reset_id(){
-      this.setState({
-        selected_id: null,
-        current_location_selection: null
-      });        
-    }
+
     render() {
 
       return (
         <Router>
-          <HeaderBar selected={this.state.current_location_selection} selected_id={this.state.selected_id} ondelete={this.location_selected} prefix="locations"/>
+          <HeaderBar selected={this.state.current_location_selection} selected_id={this.state.row_selection.length==0?null:"selected locations"} ondelete={this.location_selected} prefix="locations"/>
           <Switch>
             <Route path="/locations/add-user">
               <AddLocation />
             </Route>   
             {/* <Route path="/locations/edit-user">
               <EditLocation change_name={this.change_name} reset_id={this.reset_id}/>
-            </Route>
+            </Route> */}
             <Route path="/locations/view-user">
-              <ViewLocation reset_id={this.reset_id} />
-            </Route>             */}
+              <ViewLocation selection={this.state.row_selection}/>
+            </Route>            
             <Route path="/locations/">
-              <LocationList onselect={this.location_selected} />
+              <h1>asda</h1>
+              <LocationTable onselect={this.reset_id}  />
             </Route>                
 
           </Switch>

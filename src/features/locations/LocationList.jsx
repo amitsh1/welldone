@@ -6,7 +6,6 @@ export function LocationList(props) {
   
   const [selected, setSelected] = useState(null);
   const { entities } = useSelector((state) => state.locations);
-  console.log(entities,'entities');
   const loading = useSelector((state) => state.loading);
 
 
@@ -27,6 +26,6 @@ export function LocationList(props) {
 
   return (
     
-    <LocationTable data={entities}/>
+    <LocationTable data={entities} ref={selectedRows}/>
   );
 }

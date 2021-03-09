@@ -1,7 +1,8 @@
 import React from 'react'
 // import styled from 'styled-components'
-import { useTable,useSortBy,  useFilters, useGlobalFilter,useAsyncDebounce,useGroupBy, useExpanded  } from 'react-table'
+import { useTable,useSortBy,  useFilters, useGlobalFilter,useAsyncDebounce,useGroupBy, useExpanded,useRowSelect  } from 'react-table'
 import {matchSorter} from 'match-sorter'
+import { useDispatch, useSelector } from "react-redux";
 
 // const Styles = styled.div`
 //   padding: 1rem;
@@ -82,17 +83,36 @@ function GlobalFilter({
   }
 ///////
 
+
 function fuzzyTextFilterFn(rows, id, filterValue) {
-    console.log(rows,filterValue)
     return matchSorter(rows, filterValue, { keys: [row => row.values[id]] })
   }
   
   // Let the table remove the filter if the string is empty
   fuzzyTextFilterFn.autoRemove = val => !val
 
+//////////////////
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef()
+    const resolvedRef = ref || defaultRef
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate
+    }, [resolvedRef, indeterminate])
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest}/>
+      </>
+    )
+  }
+)
 
 
-function Table({ columns, data }) {
+
+
+function Table({ columns, data ,onselect,onselectall}) {
 
     const filterTypes = React.useMemo(
         () => ({
@@ -133,7 +153,8 @@ function Table({ columns, data }) {
     visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { groupBy, expanded },
+    state: { groupBy, expanded,selectedRowIds },
+    selectedFlatRows
   } = useTable({
     columns,
     data,
@@ -143,8 +164,34 @@ function Table({ columns, data }) {
   useGroupBy,
   // useGroupBy would be pretty useless without useExpanded ;)  
   useSortBy,
-  useExpanded
+  useExpanded,
+  useRowSelect,
+  hooks => {
+    hooks.visibleColumns.push(columns => [
+      // Let's make a column for selection
+      {
+        id: 'selection',
+        // The header can use the table's getToggleAllRowsSelectedProps method
+        // to render a checkbox
+        Header: ({ getToggleAllRowsSelectedProps }) => (
+          <div>
+            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+          </div>
+        ),
+        // The cell can use the individual row's getToggleRowSelectedProps method
+        // to the render a checkbox
+        Cell: ({ row }) => (
+          <div>
+            <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+          </div>
+        ),
+      },
+      ...columns,
+    ])
+  }  
   )
+
+
 
   // Render the UI for your table
   return (
@@ -153,7 +200,11 @@ function Table({ columns, data }) {
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())} onClick={() => {
+                if (column.id=="selection") {
+                  onselectall(rows.map(x=>x.original))
+                }
+                }}>
                   {column.canGroupBy ? (
                     // If the column can be grouped, let's add a toggle
                     <span {...column.getGroupByToggleProps()}>
@@ -195,7 +246,11 @@ function Table({ columns, data }) {
           return (
             <tr {...row.getRowProps()} >
               {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>
+                return <td {...cell.getCellProps()}  onClick={() => {
+                  if (cell.column.id=='selection'){
+                    onselect(row.original)
+                  }
+                  }}>
                       {cell.isGrouped ? (
                         // If it's a grouped cell, add an expander and row count
                         <>
@@ -223,6 +278,7 @@ function Table({ columns, data }) {
 }
 
 function LocationTable(props) {
+  const { entities } = useSelector((state) => state.locations);
   const columns = React.useMemo(
     () => [
       {
@@ -248,8 +304,10 @@ function LocationTable(props) {
 
 
   return (
-    <Table columns={columns} data={props.data} />
+    <Table columns={columns} data={entities} onselect={props.onselect} onselectall={props.onselectall}/>
   )
 }
 
 export default LocationTable
+
+
