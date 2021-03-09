@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { AddLocation } from "../../features/locations/AddLocation";
 import { ViewLocation } from "../../features/locations/ViewLocation";
-
+import { EditLocation } from "../../features/locations/EditLocation";
 // import { LocationList } from "../../features/locations/LocationList";
 import LocationTable from "../LocationTable/LocationTable";
 
@@ -23,6 +23,7 @@ class Locations extends React.Component {
       // this.location_selected = this.location_selected.bind(this);
       // this.change_name = this.change_name.bind(this);
       this.reset_id = this.reset_id.bind(this);
+      this.reset_selection = this.reset_selection.bind(this)
     }
 
  
@@ -38,8 +39,13 @@ class Locations extends React.Component {
     //         current_location_selection:location
     //       });            
     // }
+    reset_selection(){
+      this.setState({
+        all_is_selected:false,
+        row_selection:[]
+      });       
+    }
     reset_id(item){
-      
       if (item.length){
         this.setState({
           all_is_selected:!(this.state.all_is_selected || item.length==this.state.row_selection.length),
@@ -66,11 +72,11 @@ class Locations extends React.Component {
             <Route path="/locations/add-user">
               <AddLocation />
             </Route>   
-            {/* <Route path="/locations/edit-user">
-              <EditLocation change_name={this.change_name} reset_id={this.reset_id}/>
-            </Route> */}
+            <Route path="/locations/edit-user">
+              <EditLocation selection={this.state.row_selection} reset_selection={this.reset_selection}/>
+            </Route>
             <Route path="/locations/view-user">
-              <ViewLocation selection={this.state.row_selection}/>
+              <ViewLocation selection={this.state.row_selection} reset_selection={this.reset_selection}/>
             </Route>            
             <Route path="/locations/">
               <h1>asda</h1>

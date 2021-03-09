@@ -33,7 +33,7 @@ export function ViewLocation(props) {
 
 
       <div className="row" >
-      <Link to="/locations" onClick={x=>console.log("x")}>
+      <Link to="/locations" onClick={props.reset_selection}>
             <button className="button-primary">back to Locations</button>
       </Link>  
 

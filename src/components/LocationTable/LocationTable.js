@@ -304,7 +304,7 @@ function LocationTable(props) {
 
 
   return (
-    <Table columns={columns} data={entities} onselect={props.onselect} onselectall={props.onselectall}/>
+    <Table columns={columns} data={entities} onselect={props.onselect} onselectall={props.onselect}/>
   )
 }
 

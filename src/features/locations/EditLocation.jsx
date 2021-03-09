@@ -1,66 +1,74 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-
-import { useState } from "react";
-import { categoryUpdated } from "./usersSlice";
+import React,{ useState,useRef,useMemo } from "react";
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leaflet';
 import { Link } from "react-router-dom";
-export function EditCategory(props) {
-  const { pathname } = useLocation();
-  const userId = parseInt(pathname.replace("/categories/edit-user/", ""));
 
-  const user = useSelector((state) =>
-    state.categories.entities.find((user) => user.id === userId)
-  );
+function LocationMarker(props) {
+  const [position, setPosition] = useState(props.position);
+  const [address, setAddress] = useState("no address selected");
 
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const markerRef = useRef(null)
+  const eventHandlers = useMemo(
+    () => ({
+      dragend(event) {
+        console.log("ass",markerRef.current,event.target.options.locid)
+        // const marker = markerRef.current
+        // if (marker != null) {
+        //   setPosition(marker.getLatLng())
+        // }
+      },
+    }),
+    [],
+  )
+  return position === null ? null : (
+    <Marker position={position} draggable={true} eventHandlers={eventHandlers} ref={markerRef} locid={props.loc}>
+      <Popup>{address}</Popup>
+    </Marker>
+  )
+}
 
-  const [name, setName] = useState(user.name);
-  const [error, setError] = useState(null);
 
-  const handleName = (e) => setName(e.target.value);
+export function EditLocation(props) {
 
-  const handleClick = () => {
-    if (name) {
-      dispatch(
-        categoryUpdated({
-          id: userId,
-          name,
-        })
-      );
-      props.change_name(null);
-
-      setError(null);
-      history.push("/categories");
-    } else {
-      setError("Fill in all fields");
-    }
-  };
 
   return (
+
     <div className="container">
       <div className="row">
-        <h1>Edit Category</h1>
+        <h1>View Locations</h1>
       </div>
-      <div className="row">
-        <div className="three columns">
-          <label htmlFor="nameInput">Name</label>
-          <input
-            className="u-full-width"
-            type="text"
-            id="nameInput"
-            onChange={handleName}
-            value={name}
+      <div className="row" >
+        {
+          props.selection.length>0?
+          <MapContainer style={{"height":"50vh"}}
+          center={{ lat: props.selection[0].coor[0], lng: props.selection[0].coor[1] }}
+          zoom={13}
+          scrollWheelZoom={true}>
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {error}
-          <button onClick={handleClick} className="button-primary">
-            Save Category
-          </button>
-          <Link to="/categories" onClick={props.reset_id}>
-            <button className="button-primary">back to Categories</button>
-          </Link>             
-        </div>
-      </div>
-    </div>
+          {props.selection.map(x=>
+            (  <LocationMarker position={x.coor} key={x.id} loc={x.id} onlocedit={props.onlocedit}/>)
+            )}
+        </MapContainer>:null
+        }
+
+      </div>  
+
+
+      <div className="row" >
+      <Link to="/locations" onClick={props.reset_selection}>
+            <button className="button-primary">back to Locations</button>
+      </Link>  
+
+      </div>  
+
+
+    </div> 
+
   );
 }
+
+
+
