@@ -14,7 +14,7 @@ export function AddCategory() {
 
   const handleName = (e) => setName(e.target.value);
 
-  const usersAmount = useSelector((state) => state.categories.entities.length==0?0:Math.max(...state.categories.entities.map(x=> x.id)))
+  const usersAmount = useSelector((state) => state.categories.entities.length===0?0:Math.max(...state.categories.entities.map(x=> x.id)))
   
   const handleClick = () => {
     

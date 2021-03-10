@@ -1,11 +1,10 @@
 import React,{ useState,useRef,useMemo } from "react";
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup,useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Link ,useHistory} from "react-router-dom";
 
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -16,8 +15,8 @@ import Alert from '@material-ui/lab/Alert';
 import { locationUpdated } from "./locationSlice";
 
 function LocationMarker(props) {
-  const [position, setPosition] = useState(props.position);
-  const [address, setAddress] = useState("no address selected");
+  var position = props.position
+  var address = "no address selected"
  
   const markerRef = useRef(null)
   const eventHandlers = useMemo(
@@ -71,7 +70,7 @@ function LocationMarker(props) {
         )  
       }
     }),
-    [],
+    [props],
   )
   return position === null ? null : (
     <Marker position={position} draggable={true} eventHandlers={eventHandlers} ref={markerRef} locid={props.loc} item={props.item}>

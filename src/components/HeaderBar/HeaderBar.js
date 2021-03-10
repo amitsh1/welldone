@@ -3,14 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link ,useHistory } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -31,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 export default function HeaderBar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [current, setCurrent] = React.useState("top");
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };

@@ -47,14 +47,11 @@ function LocationMarker(props) {
         },
 
       }),
-      [],
+      [props],
     )    
-    const map = useMapEvents({
+    useMapEvents({
       click(ev) {
-        console.log(ev)
-        var latlng = ev.latlng
-        // map.mouseEventToLatLng(ev.originalEvent);
-        
+        var latlng = ev.latlng      
         
         fetch(`https://nominatim.openstreetmap.org/reverse.php?lat=${latlng.lat}&lon=${latlng.lng}&zoom=17&format=jsonv2`)
         .then(res => res.json())

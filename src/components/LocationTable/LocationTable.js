@@ -2,7 +2,7 @@ import React from 'react'
 // import styled from 'styled-components'
 import { useTable,useSortBy,  useFilters, useGlobalFilter,useAsyncDebounce,useGroupBy, useExpanded,useRowSelect  } from 'react-table'
 import {matchSorter} from 'match-sorter'
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 // const Styles = styled.div`
 //   padding: 1rem;
@@ -65,23 +65,6 @@ function GlobalFilter({
     )
   }
   
-  // Define a default UI for filtering
-  function DefaultColumnFilter({
-    column: { filterValue, preFilteredRows, setFilter },
-  }) {
-    const count = preFilteredRows.length
-  
-    return (
-      <input
-        value={filterValue || ''}
-        onChange={e => {
-          setFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
-        }}
-        placeholder={`Search ${count} records...`}
-      />
-    )
-  }
-///////
 
 
 function fuzzyTextFilterFn(rows, id, filterValue) {
@@ -113,35 +96,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
 
 function Table({ columns, data ,onselect,onselectall}) {
-
-    const filterTypes = React.useMemo(
-        () => ({
-          // Add a new fuzzyTextFilterFn filter type.
-          fuzzyText: fuzzyTextFilterFn,
-          // Or, override the default text filter to use
-          // "startWith"
-          text: (rows, id, filterValue) => {
-            return rows.filter(row => {
-              const rowValue = row.values[id]
-              return rowValue !== undefined
-                ? String(rowValue)
-                    .toLowerCase()
-                    .startsWith(String(filterValue).toLowerCase())
-                : true
-            })
-          },
-        }),
-        []
-      )
     
-      const defaultColumn = React.useMemo(
-        () => ({
-          // Let's set up our default Filter UI
-          Filter: DefaultColumnFilter,
-        }),
-        []
-      )
-
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -153,7 +108,7 @@ function Table({ columns, data ,onselect,onselectall}) {
     visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { groupBy, expanded,selectedRowIds,isAllRowsSelected },
+    state: { selectedRowIds },
     selectedFlatRows
   } = useTable({
     columns,
@@ -195,7 +150,7 @@ function Table({ columns, data ,onselect,onselectall}) {
 
   React.useEffect(() => {
       onselect(selectedFlatRows.map(x=>x.original),selectedRowIds)
-  },[selectedRowIds]) // <-- here put the parameter to listen
+  },[onselect,selectedRowIds,selectedFlatRows]) // <-- here put the parameter to listen
 
   return (
     <table {...getTableProps()}>
@@ -290,15 +245,15 @@ function LocationTable(props) {
           {
             Header: 'Category',
             accessor: 'category',
-            Cell: ({ row: { original } }) => (
-              <span
-              style={{
-               whiteSpace: 'pre-wrap',
-              }}
-           >
-             {original.category.join(", ")}
-           </span>
-          ),            
+          //   Cell: ({ row: { original } }) => (
+          //     <span
+          //     style={{
+          //      whiteSpace: 'pre-wrap',
+          //     }}
+          //  >
+          //    {original.category.join(", ")}
+          //  </span>
+          // ),            
           },          
         ],
       },

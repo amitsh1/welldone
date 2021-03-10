@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -43,7 +42,7 @@ export function AddLocation() {
   const handleAddress = (e) => setAddress(e.target.value);
   const handleName = (e) => setName(e.target.value);
   const { entities } = useSelector((state) => state.categories);
-  const usersAmount = useSelector((state) => state.locations.entities.length==0?0:Math.max(...state.locations.entities.map(x=> x.id)))
+  const usersAmount = useSelector((state) => state.locations.entities.length===0?0:Math.max(...state.locations.entities.map(x=> x.id)))
   
   const handleClick = () => {
     
@@ -72,59 +71,60 @@ export function AddLocation() {
     setCoor(coor)
 
   }
+  if (entities.length===0) return (<Alert severity="error">please add a category to be able to add a location</Alert>)
   return (
     <div className="container">
-      <div className="row">
-        <h1>Add Location</h1>
-      </div>
-      <div className="row">
-      <Map handler={set_adress}/>
-      </div>      
-      <div className="row">
-        <div className="three columns">
-        
-        <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Category</InputLabel>
-        <Select
-          multiple
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={category}
-          onChange={handleChange}
-        >
-          {
-            entities.map(
-              x=>(<MenuItem value={x.name} key={x.id}>{x.name}</MenuItem>)
-            )
-          }
-        </Select>
-      </FormControl>
-      <label htmlFor="nameInput">Address</label>
-          <input
-            className="u-full-width"
-            type="text"
-            id="addressInput"
-            onChange={handleAddress}
-            value={address}
-          />          
-          <label htmlFor="nameInput">Name</label>
-          <input
-            className="u-full-width"
-            type="text"
-            id="nameInput"
-            onChange={handleName}
-            value={name}
-          />
-          {error}
-          {(name && coor && category.length>0)?          <button onClick={handleClick} className="button-primary">
-            Add Location
-          </button>: <Alert severity="error">must enter name, coordinates(select on map) and category</Alert>}
+    <div className="row">
+      <h1>Add Location</h1>
+    </div>
+    <div className="row">
+    <Map handler={set_adress}/>
+    </div>      
+    <div className="row">
+      <div className="three columns">
+      
+      <FormControl className={classes.formControl}>
+      <InputLabel id="demo-simple-select-label">Category</InputLabel>
+      <Select
+        multiple
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={category}
+        onChange={handleChange}
+      >
+        {
+          entities.map(
+            x=>(<MenuItem value={x.name} key={x.id}>{x.name}</MenuItem>)
+          )
+        }
+      </Select>
+    </FormControl>
+    <label htmlFor="nameInput">Address</label>
+        <input
+          className="u-full-width"
+          type="text"
+          id="addressInput"
+          onChange={handleAddress}
+          value={address}
+        />          
+        <label htmlFor="nameInput">Name</label>
+        <input
+          className="u-full-width"
+          type="text"
+          id="nameInput"
+          onChange={handleName}
+          value={name}
+        />
+        {error}
+        {(name && coor && category.length>0)?          <button onClick={handleClick} className="button-primary">
+          Add Location
+        </button>: <Alert severity="error">must enter name, coordinates(select on map) and category</Alert>}
 
-          <Link to="/locations">
-            <button className="button-primary">back to Locations</button>
-          </Link>            
-        </div>
+        <Link to="/locations">
+          <button className="button-primary">back to Locations</button>
+        </Link>            
       </div>
     </div>
+  </div>
   );
 }

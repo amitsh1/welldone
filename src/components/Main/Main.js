@@ -2,7 +2,7 @@ import React from 'react';
 import Categories from '../Categories/Categories';
 import Locations from '../Locations/Locations';
 import BottomBar from '../BottomBar/BottomBar';
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch,Redirect } from "react-router-dom";
 
 class Main extends React.Component {
     constructor(props) {
@@ -46,7 +46,7 @@ class Main extends React.Component {
               <Locations />
             </Route>                   
             <Route path="/">
-              <h1>ssdffasa</h1>
+            <Redirect to="/locations" />
             </Route>            
           </Switch>
           <BottomBar />

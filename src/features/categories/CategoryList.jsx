@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 export function CategoryList(props) {
   
   const [selected, setSelected] = useState(null);
@@ -9,7 +9,7 @@ export function CategoryList(props) {
 
 
   const handleSelect = (id,name) => {
-    if (id==selected){
+    if (id===selected){
       setSelected(null);
       props.onselect(null,false)
       
@@ -38,7 +38,7 @@ export function CategoryList(props) {
             </thead>
             <tbody>
               {entities.length? entities.map(({ id, name, email }, i) => (
-                  <tr key={i} onClick={()=> handleSelect(id,name)} bgcolor={selected==id?"#ff6600":"white"}>
+                  <tr key={i} onClick={()=> handleSelect(id,name)} bgcolor={selected===id?"#ff6600":"white"}>
                     <td>{id}</td><td>{name}</td>
                   </tr>
                 )):null}

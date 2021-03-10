@@ -62,7 +62,7 @@ class Locations extends React.Component {
         <Router>
           <HeaderBar 
           selected={this.state.current_location_selection} 
-          selected_id={this.state.row_selection.length==0?null:this.state.row_selection.map(x=>x.id)} 
+          selected_id={this.state.row_selection.length===0?null:this.state.row_selection.map(x=>x.id)} 
           ondelete={this.reset_selection} 
           redobj = {locationDeleted}          
           // ondelete={this.location_selected} 
