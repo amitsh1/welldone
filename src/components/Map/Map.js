@@ -102,10 +102,10 @@ class Map extends React.Component {
 
       return (
         <MapContainer
-        style={{"height":"40vh"}}
+        style={{"height":"30vh"}}
         center={{ lat: 32.08445596155007, lng: 34.78680309759083 }}
         zoom={13}
-        scrollWheelZoom={true}>
+        scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
