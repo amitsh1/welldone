@@ -79,7 +79,6 @@ function Table({ columns, data ,onselect,onselectall}) {
     preGlobalFilteredRows,
     setGlobalFilter,
     state: { selectedRowIds },
-    selectedFlatRows
   } = useTable({
     columns,
     data,
@@ -119,8 +118,13 @@ function Table({ columns, data ,onselect,onselectall}) {
 
 
   React.useEffect(() => {
-      onselect(selectedFlatRows.map(x=>x.original),selectedRowIds)
-  },[onselect,selectedRowIds,selectedFlatRows]) // <-- here put the parameter to listen
+      onselect(
+        data.filter(
+        (x,i)=> selectedRowIds[i]
+      ),
+      selectedRowIds
+      )
+  },[onselect,selectedRowIds,data]) // <-- here put the parameter to listen
 
   return (
     <table {...getTableProps()}>

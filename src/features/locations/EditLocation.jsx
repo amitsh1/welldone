@@ -117,10 +117,10 @@ export function EditLocation(props) {
       <div className="row" >
         {
           props.selection.length>0?
-          <MapContainer style={{"height":"50vh"}}
+          <MapContainer style={{"height":"35vh"}}
           center={{ lat: props.selection[0].coor[0], lng: props.selection[0].coor[1] }}
           zoom={10}
-          scrollWheelZoom={true}>
+          scrollWheelZoom={false}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -143,7 +143,7 @@ export function EditLocation(props) {
       {
         age.length>0?
         <FormControl >
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
           multiple
           labelId="demo-simple-select-label"

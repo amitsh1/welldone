@@ -35,7 +35,7 @@ class Locations extends React.Component {
       });       
     }
     onrowselection(item,rowids){
-      
+      console.log(item)
       this.setState({
         rowids:rowids,
         row_selection:item
