@@ -153,7 +153,7 @@ function Table({ columns, data ,onselect,onselectall}) {
     visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { groupBy, expanded,selectedRowIds },
+    state: { groupBy, expanded,selectedRowIds,isAllRowsSelected },
     selectedFlatRows
   } = useTable({
     columns,
@@ -193,18 +193,17 @@ function Table({ columns, data ,onselect,onselectall}) {
 
 
 
-  // Render the UI for your table
+  React.useEffect(() => {
+      onselect(selectedFlatRows.map(x=>x.original),selectedRowIds)
+  },[selectedRowIds]) // <-- here put the parameter to listen
+
   return (
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())} onClick={() => {
-                if (column.id=="selection") {
-                  onselectall(rows.map(x=>x.original))
-                }
-                }}>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())} >
                   {column.canGroupBy ? (
                     // If the column can be grouped, let's add a toggle
                     <span {...column.getGroupByToggleProps()}>
@@ -246,11 +245,7 @@ function Table({ columns, data ,onselect,onselectall}) {
           return (
             <tr {...row.getRowProps()} >
               {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}  onClick={() => {
-                  if (cell.column.id=='selection'){
-                    onselect(row.original)
-                  }
-                  }}>
+                return <td {...cell.getCellProps()} >
                       {cell.isGrouped ? (
                         // If it's a grouped cell, add an expander and row count
                         <>

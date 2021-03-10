@@ -17,6 +17,7 @@ class Locations extends React.Component {
       this.state = {
         row_selection: [],
         selected_row_ids:[],
+        rowids:{},
         all_is_selected:false
       };
       
@@ -45,21 +46,33 @@ class Locations extends React.Component {
         row_selection:[]
       });       
     }
-    reset_id(item){
-      if (item.length){
+    reset_id(item,rowids){
+      
+      if (JSON.stringify(rowids) != JSON.stringify(this.state.rowids) ){
+        console.log(this.state.rowids,rowids)
         this.setState({
-          all_is_selected:!(this.state.all_is_selected || item.length==this.state.row_selection.length),
-          row_selection:!(this.state.all_is_selected || item.length==this.state.row_selection.length)?item:[]
-        });      
+          rowids:rowids,
+          row_selection:item
+        }); 
+
       }
-      else {
-        var new_row_sel = this.state.row_selection.includes(item) ? this.state.row_selection.filter(i => i !== item) : [ ...this.state.row_selection, item ];
-        this.setState({
-          all_is_selected:this.state.all_is_selected?false:this.state.all_is_selected,
-          row_selection:new_row_sel
-        });   
+
+      // console.log(this.state.row_selection)
+      // console.log(item,'item')
+      // if (item.length){
+      //   this.setState({
+      //     all_is_selected:!(this.state.all_is_selected || item.length==this.state.row_selection.length),
+      //     row_selection:!(this.state.all_is_selected || item.length==this.state.row_selection.length)?item:[]
+      //   });      
+      // }
+      // else {
+      //   var new_row_sel = this.state.row_selection.includes(item) ? this.state.row_selection.filter(i => i !== item) : [ ...this.state.row_selection, item ];
+      //   this.setState({
+      //     all_is_selected:this.state.all_is_selected?false:this.state.all_is_selected,
+      //     row_selection:new_row_sel
+      //   });   
     
-       }
+      //  }
      
     }
 
