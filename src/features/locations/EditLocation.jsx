@@ -123,7 +123,7 @@ export function EditLocation(props) {
 
     <div className="container">
       <div className="row">
-        <h1>View Locations</h1>
+        <h1>Edit Locations</h1>
       </div>
       <div className="row" >
         {

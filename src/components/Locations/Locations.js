@@ -23,7 +23,7 @@ class Locations extends React.Component {
       
       // this.location_selected = this.location_selected.bind(this);
       // this.change_name = this.change_name.bind(this);
-      this.reset_id = this.reset_id.bind(this);
+      this.onrowselection = this.onrowselection.bind(this);
       this.reset_selection = this.reset_selection.bind(this)
     }
 
@@ -46,33 +46,13 @@ class Locations extends React.Component {
         row_selection:[]
       });       
     }
-    reset_id(item,rowids){
+    onrowselection(item,rowids){
       
-      if (JSON.stringify(rowids) != JSON.stringify(this.state.rowids) ){
-        console.log(this.state.rowids,rowids)
-        this.setState({
-          rowids:rowids,
-          row_selection:item
-        }); 
+      this.setState({
+        rowids:rowids,
+        row_selection:item
+      }); 
 
-      }
-
-      // console.log(this.state.row_selection)
-      // console.log(item,'item')
-      // if (item.length){
-      //   this.setState({
-      //     all_is_selected:!(this.state.all_is_selected || item.length==this.state.row_selection.length),
-      //     row_selection:!(this.state.all_is_selected || item.length==this.state.row_selection.length)?item:[]
-      //   });      
-      // }
-      // else {
-      //   var new_row_sel = this.state.row_selection.includes(item) ? this.state.row_selection.filter(i => i !== item) : [ ...this.state.row_selection, item ];
-      //   this.setState({
-      //     all_is_selected:this.state.all_is_selected?false:this.state.all_is_selected,
-      //     row_selection:new_row_sel
-      //   });   
-    
-      //  }
      
     }
 
@@ -98,7 +78,7 @@ class Locations extends React.Component {
               <ViewLocation selection={this.state.row_selection} reset_selection={this.reset_selection}/>
             </Route>            
             <Route path="/locations/">
-              <LocationTable onselect={this.reset_id}  />
+              <LocationTable onselect={this.onrowselection}  />
             </Route>                
 
           </Switch>

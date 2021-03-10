@@ -120,8 +120,8 @@ export function AddLocation() {
             Add Location
           </button>: <Alert severity="error">must enter name, coordinates(select on map) and category</Alert>}
 
-          <Link to="/categories">
-            <button className="button-primary">back to Categories</button>
+          <Link to="/locations">
+            <button className="button-primary">back to Locations</button>
           </Link>            
         </div>
       </div>

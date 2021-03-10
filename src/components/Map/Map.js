@@ -15,11 +15,45 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 
 function LocationMarker(props) {
-    const [position, setPosition] = useState([51.505, -0.09]);
-    const [address, setAddress] = useState("no address selected");
+    const [position, setPosition] = useState([32.08445596155007, 34.78680309759083]);
+    const [address, setAddress] = useState("Arlozorov St 111, Tel Aviv-Yafo (Welldone)");
+    
+    const markerRef = React.useRef(null)
+    const eventHandlers = React.useMemo(
+      () => ({
+        dragend(event) {
+          const latlng = markerRef.current.getLatLng()
+  
+          fetch(`https://nominatim.openstreetmap.org/reverse.php?lat=${latlng.lat}&lon=${latlng.lng}&zoom=17&format=jsonv2`)
+          .then(res => res.json())
+          .then(
+            (res) => {
+              props.set_address(res.display_name,[latlng.lat,latlng.lng])
+              setAddress(res.display_name);        
+  
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+              this.setState({
+                isLoaded: true,
+                error
+              });
+            }
+          )        
+  
+
+        },
+
+      }),
+      [],
+    )    
     const map = useMapEvents({
       click(ev) {
-        var latlng = map.mouseEventToLatLng(ev.originalEvent);
+        console.log(ev)
+        var latlng = ev.latlng
+        // map.mouseEventToLatLng(ev.originalEvent);
         
         
         fetch(`https://nominatim.openstreetmap.org/reverse.php?lat=${latlng.lat}&lon=${latlng.lng}&zoom=17&format=jsonv2`)
@@ -41,11 +75,11 @@ function LocationMarker(props) {
         )
                       
         setPosition(ev.latlng)
-      }
+      }  
     })
   
     return position === null ? null : (
-      <Marker position={position}>
+      <Marker position={position} ref={markerRef} draggable={true} eventHandlers={eventHandlers} >
         <Popup>{address}</Popup>
       </Marker>
     )
@@ -68,7 +102,8 @@ class Map extends React.Component {
 
       return (
         <MapContainer
-        center={{ lat: 51.505, lng: -0.09 }}
+        style={{"height":"40vh"}}
+        center={{ lat: 32.08445596155007, lng: 34.78680309759083 }}
         zoom={13}
         scrollWheelZoom={true}>
         <TileLayer
