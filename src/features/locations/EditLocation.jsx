@@ -48,16 +48,6 @@ function LocationMarker(props) {
           }
         )        
 
-        // props.setcat(
-        //   event.target.options.item.category
-        // )
-        // props.setname(
-        //   event.target.options.item.name
-        // )        
-        // const marker = markerRef.current
-        // if (marker != null) {
-        //   setPosition(marker.getLatLng())
-        // }
       },
       click(event) {
 

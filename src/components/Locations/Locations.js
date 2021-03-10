@@ -21,25 +21,13 @@ class Locations extends React.Component {
         all_is_selected:false
       };
       
-      // this.location_selected = this.location_selected.bind(this);
-      // this.change_name = this.change_name.bind(this);
+
       this.onrowselection = this.onrowselection.bind(this);
       this.reset_selection = this.reset_selection.bind(this)
     }
 
  
 
-    // location_selected(id,location){
-    //     this.setState({
-    //         current_location_selection:location,
-    //         selected_id: id
-    //       });              
-    // }
-    // change_name(location){
-    //     this.setState({
-    //         current_location_selection:location
-    //       });            
-    // }
     reset_selection(){
       this.setState({
         all_is_selected:false,
@@ -65,7 +53,6 @@ class Locations extends React.Component {
           selected_id={this.state.row_selection.length===0?null:this.state.row_selection.map(x=>x.id)} 
           ondelete={this.reset_selection} 
           redobj = {locationDeleted}          
-          // ondelete={this.location_selected} 
           prefix="locations"/>
           <Switch>
             <Route path="/locations/add-user">

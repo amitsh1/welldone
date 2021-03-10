@@ -39,7 +39,6 @@ export default function HeaderBar(props) {
     dispatch(props.redobj({ id:id.length?id:[id] }));
     history.push("/"+props.prefix)
     props.ondelete();
-    // dispatch(props.redobj({ id }));
     
   };
   const handleClose = (clicked) => {
